@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { PASSENGER } from '../common/models/models';
 import { CreatePassengerDto } from './dto/create-passenger.dto';
@@ -20,12 +20,12 @@ export class PassengerService {
     return await this.model.find();
   }
 
-  async findOne(id: string): Promise<IPansserger> {
+  async findOne(id: ObjectId): Promise<IPansserger> {
     return await this.model.findById(id);
   }
 
   async update(
-    id: string,
+    id: ObjectId,
     updatePassengerDto: UpdatePassengerDto,
   ): Promise<IPansserger> {
     const updatePassenger = await this.model.findByIdAndUpdate(
@@ -40,7 +40,7 @@ export class PassengerService {
     return updatePassenger;
   }
 
-  async remove(id: string): Promise<IPansserger> {
+  async remove(id: ObjectId): Promise<IPansserger> {
     const deletePassenger = await this.model.findByIdAndDelete(id);
     if (!deletePassenger) {
       throw new HttpException('ELEMENT_NOT_FOUNT', HttpStatus.NOT_FOUND);

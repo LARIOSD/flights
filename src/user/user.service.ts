@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { USER } from 'src/common/models/models';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -25,11 +25,11 @@ export class UserService {
     return await this.model.find();
   }
 
-  async findOne(id: string): Promise<IUser> {
+  async findOne(id: ObjectId): Promise<IUser> {
     return await this.model.findById(id);
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<IUser> {
+  async update(id: ObjectId, updateUserDto: UpdateUserDto): Promise<IUser> {
     const hash = await this.hashPassword(updateUserDto.password);
     const user = { ...updateUserDto, password: hash };
     const updateUser = await this.model.findByIdAndUpdate(id, user, {
@@ -42,7 +42,7 @@ export class UserService {
     return updateUser;
   }
 
-  async remove(id: string): Promise<IUser> {
+  async remove(id: ObjectId): Promise<IUser> {
     const deleteUser = await this.model.findByIdAndDelete(id);
     if (!deleteUser) {
       throw new HttpException('ELEMENT_NOT_FOUND', HttpStatus.NOT_FOUND);

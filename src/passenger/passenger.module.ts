@@ -18,5 +18,6 @@ import { PassengerController } from './passenger.controller';
   ],
   controllers: [PassengerController],
   providers: [PassengerService],
+  exports: [PassengerService],
 })
 export class PassengerModule {}

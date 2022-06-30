@@ -11,6 +11,7 @@ import { PassengerService } from './passenger.service';
 import { CreatePassengerDto } from './dto/create-passenger.dto';
 import { UpdatePassengerDto } from './dto/update-passenger.dto';
 import { IPansserger } from '../common/interfaces/passenger.interface';
+import { ObjectId } from 'mongoose';
 
 @Controller('api/v1/passenger')
 export class PassengerController {
@@ -27,19 +28,19 @@ export class PassengerController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<IPansserger> {
+  findOne(@Param('id') id: ObjectId): Promise<IPansserger> {
     return this.passengerService.findOne(id);
   }
 
   @Put(':id') update(
-    @Param('id') id: string,
+    @Param('id') id: ObjectId,
     @Body() updatePassengerDto: UpdatePassengerDto,
   ): Promise<IPansserger> {
     return this.passengerService.update(id, updatePassengerDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<IPansserger> {
+  remove(@Param('id') id: ObjectId): Promise<IPansserger> {
     return this.passengerService.remove(id);
   }
 }
