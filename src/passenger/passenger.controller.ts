@@ -7,12 +7,14 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import { ObjectId } from 'mongoose';
+import { ApiTags } from '@nestjs/swagger';
 import { PassengerService } from './passenger.service';
 import { CreatePassengerDto } from './dto/create-passenger.dto';
 import { UpdatePassengerDto } from './dto/update-passenger.dto';
 import { IPansserger } from '../common/interfaces/passenger.interface';
-import { ObjectId } from 'mongoose';
 
+@ApiTags('Passengers')
 @Controller('api/v1/passenger')
 export class PassengerController {
   constructor(private readonly passengerService: PassengerService) {}

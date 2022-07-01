@@ -8,9 +8,12 @@ import {
   Put,
 } from '@nestjs/common';
 import { ObjectId } from 'mongoose';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FlightService } from './flight.service';
 import { CreateFlightDto } from './dto/create-flight.dto';
 import { UpdateFlightDto } from './dto/update-flight.dto';
+
+@ApiTags('Flisghts')
 @Controller('api/v1/flight')
 export class FlightController {
   constructor(private readonly flightService: FlightService) {}
@@ -21,6 +24,7 @@ export class FlightController {
   }
 
   @Post(':flightId/passenger/:passengerId')
+  @ApiOperation({ summary: 'Add passengers to the flight' })
   async addPassenger(
     @Param('flightId') lightId: ObjectId,
     @Param('passengerId') passengerId: ObjectId,
