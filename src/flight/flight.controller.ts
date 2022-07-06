@@ -6,14 +6,18 @@ import {
   Param,
   Delete,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ObjectId } from 'mongoose';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FlightService } from './flight.service';
 import { CreateFlightDto } from './dto/create-flight.dto';
 import { UpdateFlightDto } from './dto/update-flight.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Flisghts')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('api/v1/flight')
 export class FlightController {
   constructor(private readonly flightService: FlightService) {}

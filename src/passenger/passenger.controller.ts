@@ -6,15 +6,19 @@ import {
   Put,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ObjectId } from 'mongoose';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { PassengerService } from './passenger.service';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreatePassengerDto } from './dto/create-passenger.dto';
 import { UpdatePassengerDto } from './dto/update-passenger.dto';
 import { IPansserger } from '../common/interfaces/passenger.interface';
 
 @ApiTags('Passengers')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('api/v1/passenger')
 export class PassengerController {
   constructor(private readonly passengerService: PassengerService) {}

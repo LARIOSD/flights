@@ -6,14 +6,18 @@ import {
   Put,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ObjectId } from 'mongoose';
-import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @ApiTags('Users')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('api/v1/user')
 export class UserController {
   constructor(private readonly userService: UserService) {}

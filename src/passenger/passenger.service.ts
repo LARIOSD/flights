@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { PASSENGER } from '../common/models/models';
 import { CreatePassengerDto } from './dto/create-passenger.dto';
 import { UpdatePassengerDto } from './dto/update-passenger.dto';
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { IPansserger } from '../common/interfaces/passenger.interface';
 
 @Injectable()
@@ -35,7 +35,7 @@ export class PassengerService {
     );
 
     if (!updatePassenger) {
-      throw new HttpException('ELEMENT_NOT_FOUNT', HttpStatus.NOT_FOUND);
+      throw new NotFoundException('Element not found');
     }
     return updatePassenger;
   }
@@ -43,7 +43,7 @@ export class PassengerService {
   async remove(id: ObjectId): Promise<IPansserger> {
     const deletePassenger = await this.model.findByIdAndDelete(id);
     if (!deletePassenger) {
-      throw new HttpException('ELEMENT_NOT_FOUNT', HttpStatus.NOT_FOUND);
+      throw new NotFoundException('Element not found');
     }
     return deletePassenger;
   }
